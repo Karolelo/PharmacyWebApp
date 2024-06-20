@@ -8,8 +8,8 @@ namespace PrescriptionApp.Configuration
     {
         public void Configure(EntityTypeBuilder<Patient> builder)
         {
-            builder.HasKey(e => e.IdPatient);
-            builder.Property(e => e.IdPatient).ValueGeneratedOnAdd();
+            builder.HasKey(e => e.Id);
+            builder.Property(e => e.Id).ValueGeneratedOnAdd();
             builder.Property(e => e.FirstName).IsRequired().HasMaxLength(50);
             builder.Property(e => e.LastName).IsRequired().HasMaxLength(50);
         }

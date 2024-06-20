@@ -1,6 +1,6 @@
 ﻿namespace PrescriptionApp.Models;
 
-public class BasicEntity
+public abstract class BasicEntity
 {
-    
+    public int Id { set; get; }
 }

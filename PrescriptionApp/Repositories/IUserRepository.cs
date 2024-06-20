@@ -1,6 +1,9 @@
-﻿namespace PrescriptionApp.Repositories;
+﻿using PrescriptionApp.Models;
 
-public class IUserRepository
+namespace PrescriptionApp.Repositories;
+
+public interface IUserRepository
 {
-    
+    Task<int> RegisterUser(User user);
+    Task<int> Login(LoginRequest loginRequest);
 }

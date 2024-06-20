@@ -4,7 +4,7 @@ using PrescriptionApp.Models;
 
 namespace PrescriptionApp.Context;
 
-public class PharmacyContext :DbContext
+public class Context :DbContext
 {
     
     public DbSet<Patient> Patients { get; set; }
@@ -13,17 +13,17 @@ public class PharmacyContext :DbContext
     public DbSet<Prescription> Prescriptions { get; set; }
     public DbSet<PrescriptionMedicament> PrescriptionMedicaments { get; set; }
     public DbSet<User> Users { get; set; }
-    protected PharmacyContext()
+    protected Context()
     {
     }
 
-    public PharmacyContext(DbContextOptions options) : base(options)
+    public Context(DbContextOptions options) : base(options)
     {
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        //modelBuilder.ApplyConfigurationsFromAssembly(typeof(PharmacyContext).Assembly);
+        //modelBuilder.ApplyConfigurationsFromAssembly(typeof(Context).Assembly);
         modelBuilder.ApplyConfiguration(new PatientsConfiguration());
         modelBuilder.ApplyConfiguration(new DoctorsConfiguration());
         modelBuilder.ApplyConfiguration(new MedicamentsConfiguration());

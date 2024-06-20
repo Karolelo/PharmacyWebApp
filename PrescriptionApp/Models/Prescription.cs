@@ -1,8 +1,7 @@
 ﻿namespace PrescriptionApp.Models;
 
-public class Prescription
+public class Prescription : BasicEntity
 {
-    public int IdPrescription { get; set; }
     public DateTime Date { get; set; }
     public DateTime DueDate { get; set; }
     public int IdPatient { get; set; }

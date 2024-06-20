@@ -1,6 +1,6 @@
 ﻿namespace PrescriptionApp.Models;
 
-public class PrescriptionMedicament
+public class PrescriptionMedicament 
 {
     public int IdPrescription { get; set; }
     public Prescription Prescription { get; set; }

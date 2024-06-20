@@ -11,7 +11,7 @@ using PrescriptionApp.Context;
 
 namespace PrescriptionApp.Migrations
 {
-    [DbContext(typeof(PharmacyContext))]
+    [DbContext(typeof(Context.Context))]
     [Migration("20240531195727_init")]
     partial class init
     {

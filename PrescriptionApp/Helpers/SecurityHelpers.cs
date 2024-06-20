@@ -21,7 +21,7 @@ namespace GakkoHorizontalSlice.Helpers
                 password: password,
                 salt: salt,
                 prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
+                iterationCount: 1000,
                 numBytesRequested: 256 / 8));
 
             string saltBase64 = Convert.ToBase64String(salt);
@@ -37,7 +37,7 @@ namespace GakkoHorizontalSlice.Helpers
                 password: password,
                 salt: saltBytes,
                 prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
+                iterationCount: 1000,
                 numBytesRequested: 256 / 8));
 
             return currentHashedPassword;

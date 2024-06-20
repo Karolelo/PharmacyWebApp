@@ -1,8 +1,7 @@
 ﻿namespace PrescriptionApp.Models;
 
-public class Doctor
+public class Doctor : BasicEntity
 {
-    public int IdDoctor { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public ICollection<Prescription> Prescriptions { get; set; }

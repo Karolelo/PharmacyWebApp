@@ -8,53 +8,53 @@ namespace PrescriptionApp.Repositories;
 
 public class PharmacyRepository : IPharmacyRepository
 {
-    private readonly PharmacyContext _pharmacyContext;
+    private readonly Context.Context _context;
 
-    public PharmacyRepository(PharmacyContext pharmacyContext)
+    public PharmacyRepository(Context.Context context)
     {
-        _pharmacyContext = pharmacyContext;
+        _context = context;
     }
 
     public async Task<Patient> GetPatient(int idPatient)
     {
-        return await _pharmacyContext.Patients.FindAsync(idPatient);
+        return await _context.Patients.FindAsync(idPatient);
     }
 
     public async Task<int> AddPatient(Patient patient)
     {
-        await _pharmacyContext.Patients.AddAsync(patient);
-        await _pharmacyContext.SaveChangesAsync();
+        await _context.Patients.AddAsync(patient);
+        await _context.SaveChangesAsync();
 
-        return patient.IdPatient;
+        return patient.Id;
     }
 
     public async Task<IQueryable<Prescription>> GetPatientPrescriptions(int idPatient)
     {
-        var result = _pharmacyContext.Prescriptions.Where(e => e.IdPatient == idPatient);
+        var result = _context.Prescriptions.Where(e => e.IdPatient == idPatient);
         return result;
     }
     
     public async Task<bool> PatientExist(int idPatient)
     {
-        return await _pharmacyContext.Patients.AnyAsync(p => p.IdPatient == idPatient);
+        return await _context.Patients.AnyAsync(p => p.Id == idPatient);
     }
 
     public async Task<bool> MedicineExist(int idMedicine)
     {
-        return await _pharmacyContext.Medicaments.AnyAsync(m => m.IdMedicament == idMedicine);
+        return await _context.Medicaments.AnyAsync(m => m.Id == idMedicine);
     }
     
     public async Task<bool> DoctorExist(int idMedicine)
     {
-        return await _pharmacyContext.Medicaments.AnyAsync(m => m.IdMedicament == idMedicine);
+        return await _context.Medicaments.AnyAsync(m => m.Id == idMedicine);
     }
     
 
     public async Task<int> CreatePrescription(Prescription prescription)
     {
-        await _pharmacyContext.Prescriptions.AddAsync(prescription);
-        await _pharmacyContext.SaveChangesAsync();
-        return prescription.IdPrescription;
+        await _context.Prescriptions.AddAsync(prescription);
+        await _context.SaveChangesAsync();
+        return prescription.Id;
     }
 
     public async Task<int> AddMedicineToPrescription(int idPrescription, int idMedicament,int dose,string description)
@@ -67,20 +67,20 @@ public class PharmacyRepository : IPharmacyRepository
             Description = description
         };
 
-        await _pharmacyContext.PrescriptionMedicaments.AddAsync(prescriptionMedicament);
-        await _pharmacyContext.SaveChangesAsync();
+        await _context.PrescriptionMedicaments.AddAsync(prescriptionMedicament);
+        await _context.SaveChangesAsync();
         return idPrescription;
     }
 
     public async Task<PatientPrescreptionResultDto> getPatientMeds(int idPatient)
     {
-        var patient = await _pharmacyContext.Patients
+        var patient = await _context.Patients
             .Include(p => p.Prescriptions)
             .ThenInclude(pr => pr.PrescriptionMedicaments)
             .ThenInclude(pm => pm.Medicament)
             .Include(p => p.Prescriptions)
             .ThenInclude(pr => pr.Doctor)
-            .Where(p => p.IdPatient == idPatient)
+            .Where(p => p.Id == idPatient)
             .FirstOrDefaultAsync();
 
         if (patient == null)
@@ -91,23 +91,23 @@ public class PharmacyRepository : IPharmacyRepository
         var prescriptions = patient.Prescriptions
             .OrderBy(p => p.DueDate)
             .Select(p => new PrescriptionsResultDto(
-                p.IdPrescription,
+                p.Id,
                 p.Date,
                 p.DueDate,
                 p.PrescriptionMedicaments.Select(pm => new MedicamentDto(
-                    pm.Medicament.IdMedicament,
+                    pm.Medicament.Id,
                     pm.Medicament.Name,
                     pm.Dose,
                     pm.Description
                 )).ToList(),
                 new DoctorResultDto(
-                    p.Doctor.IdDoctor,
+                    p.Doctor.Id,
                     p.Doctor.FirstName
                 )
             )).ToList();
 
         return new PatientPrescreptionResultDto(
-            patient.IdPatient,
+            patient.Id,
             patient.FirstName,
             patient.LastName,
             prescriptions

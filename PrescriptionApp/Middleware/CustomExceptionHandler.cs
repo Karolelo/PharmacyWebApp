@@ -37,10 +37,8 @@ namespace PrescriptionApp.Middleware
 
             switch (exception)
             {
-                case PrescriptionException e:
-                    response.StatusCode = StatusCodes.Status400BadRequest;
-                    break;
-                case PatientException e:
+                case PrescriptionException presException:
+                case PatientException patientException:
                     response.StatusCode = StatusCodes.Status400BadRequest;
                     break;
                 default:

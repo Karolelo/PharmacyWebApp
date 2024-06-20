@@ -1,4 +1,4 @@
-﻿namespace GakkoHorizontalSlice.Model
+﻿namespace PrescriptionApp.Models
 {
     public class LoginRequest
     {

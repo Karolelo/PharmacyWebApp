@@ -12,8 +12,8 @@ using PrescriptionApp.Context;
 namespace PrescriptionApp.Migrations
 {
     [DbContext(typeof(Context.Context))]
-    [Migration("20240601155831_ClassesAdded")]
-    partial class ClassesAdded
+    [Migration("20240620173321_someBaseClasses")]
+    partial class someBaseClasses
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,11 @@ namespace PrescriptionApp.Migrations
 
             modelBuilder.Entity("PrescriptionApp.Models.Doctor", b =>
                 {
-                    b.Property<int>("IdDoctor")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDoctor"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -43,18 +43,18 @@ namespace PrescriptionApp.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("IdDoctor");
+                    b.HasKey("Id");
 
                     b.ToTable("Doctors");
                 });
 
             modelBuilder.Entity("PrescriptionApp.Models.Medicament", b =>
                 {
-                    b.Property<int>("IdMedicament")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMedicament"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -66,18 +66,18 @@ namespace PrescriptionApp.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("IdMedicament");
+                    b.HasKey("Id");
 
                     b.ToTable("Medicaments");
                 });
 
             modelBuilder.Entity("PrescriptionApp.Models.Patient", b =>
                 {
-                    b.Property<int>("IdPatient")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPatient"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateOnly>("BirthDay")
                         .HasColumnType("date");
@@ -92,18 +92,18 @@ namespace PrescriptionApp.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("IdPatient");
+                    b.HasKey("Id");
 
                     b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("PrescriptionApp.Models.Prescription", b =>
                 {
-                    b.Property<int>("IdPrescription")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPrescription"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -117,7 +117,7 @@ namespace PrescriptionApp.Migrations
                     b.Property<int>("IdPatient")
                         .HasColumnType("int");
 
-                    b.HasKey("IdPrescription");
+                    b.HasKey("Id");
 
                     b.HasIndex("IdDoctor");
 
@@ -147,6 +147,42 @@ namespace PrescriptionApp.Migrations
                     b.HasIndex("IdMedicament");
 
                     b.ToTable("PrescriptionMedicaments");
+                });
+
+            modelBuilder.Entity("PrescriptionApp.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RefreshTokenExp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Salt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("PrescriptionApp.Models.Prescription", b =>

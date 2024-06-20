@@ -8,8 +8,8 @@ namespace PrescriptionApp.Configuration
     {
         public void Configure(EntityTypeBuilder<Prescription> builder)
         {
-            builder.HasKey(e => e.IdPrescription);
-            builder.Property(e => e.IdPrescription).ValueGeneratedOnAdd();
+            builder.HasKey(e => e.Id);
+            builder.Property(e => e.Id).ValueGeneratedOnAdd();
             builder.Property(e => e.Date).IsRequired();
             builder.Property(e => e.DueDate).IsRequired();
 
