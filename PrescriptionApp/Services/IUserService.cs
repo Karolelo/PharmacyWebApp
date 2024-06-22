@@ -1,9 +1,13 @@
-﻿using PrescriptionApp.Models;
+﻿using GakkoHorizontalSlice.Model;
+using PrescriptionApp.DTOs;
+using PrescriptionApp.Models;
 
 namespace PrescriptionApp.Service;
 
 public interface IUserService
 {
     Task<int> RegisterUser(RegisterRequest request);
-    Task<int> Login(LoginRequest loginRequest);
+    Task<TokenResponse> Login(LoginRequest loginRequest);
+
+    Task<TokenResponse> Refresh(RefreshTokenRequest refreshTokenRequest);
 }

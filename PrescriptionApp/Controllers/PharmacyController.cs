@@ -1,4 +1,5 @@
 ﻿using GakkoHorizontalSlice.Helpers;
+using GakkoHorizontalSlice.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +47,14 @@ public class PharmacyController : ControllerBase
         var result = await _pharmacy.GetInfoAboutPatient(idPatient);
         return Ok(result);
         
+    }
+
+    [AllowAnonymous]
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh(RefreshTokenRequest refreshTokenRequest)
+    {
+        var result= await _user.Refresh(refreshTokenRequest);
+        return Ok(result);
     }
     
 }
